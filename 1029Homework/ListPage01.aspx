@@ -5,7 +5,31 @@
         div {
            //border: 1px solid #000000;
         }
-    </style>    
+    </style>
+       <script>
+           $(document).ready(function () {
+               var table = $('#PostTable').DataTable({
+               });
+               function AddRow(obj) {
+                   table.row.add([
+                       `<a href="InnerPage02.aspx" class="text-decoration-none">${obj.Title}<a>`,
+                   ]).draw(false);
+               };
+
+               //Get all post's information
+               $.ajax({
+                   url: "/Handler/SystemHandler.ashx?ActionName=GetAllPost",
+                   type: "GET",
+                   data: {},
+                   success: function (result) {
+                       for (var i = 0; i < result.length; i++) {
+                           var obj = result[i];
+                           AddRow(obj);
+                       }
+                   }
+               });
+           });
+       </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form>
@@ -35,13 +59,13 @@
         <thead>
             <tr>
                 <th class="th-sm" width="10%">編號</th>
-                <th class="th-sm" width="35%"><a href="InnerPage02.aspx">問卷標題</a></th>
+                <th class="th-sm" width="35%">問卷標題</th>
                 <th class="th-sm" width="10%">狀態</th>
                 <th class="th-sm" width="15%">開始時間</th>
                 <th class="th-sm" width="15%">結束時間</th>
-                <th class="th-sm" width="15%"><a href="ResultPage04.aspx">統計結果</a></th>
+                <th class="th-sm" width="15%">統計結果</th>
             </tr>
         </thead>
     </table>
-
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
 </asp:Content>
