@@ -10,9 +10,9 @@
            $(document).ready(function () {
                var table = $('#PostTable').DataTable({
                });
-               function AddRow(obj) {
+               function AddRow(obj) {                   
                    table.row.add([
-                       `<a href="InnerPage02.aspx" class="text-decoration-none">${obj.Title}<a>`,
+                       `<a href="InnerPage02.aspx" class="text-decoration-none">${obj.Title}<a>`
                    ]).draw(false);
                };
 

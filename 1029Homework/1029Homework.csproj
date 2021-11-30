@@ -85,6 +85,7 @@
     <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
+    <Content Include="Scripts\script.sql" />
     <Content Include="SystemAdmin\EditPostPage02.aspx" />
     <Content Include="SystemAdmin\EditQAPage03.aspx" />
     <Content Include="SystemAdmin\DetailPage04-1.aspx" />

@@ -23,10 +23,28 @@ namespace _1029Homework.Handler
                 context.Response.End();
             }
 
-            else if (actionName == "GetAllPost")
+            if (actionName == "GetAllPost")
             {
-                List<SurveyInfoModel> allPostInfo = PostManager.GetAllPostInfo();
+                List<SurevyInfoModel> allPostInfo = PostManager.GetAllPostInfo();
                 SendDataByJSON(context, allPostInfo);
+            }
+            else if (actionName == "GetPostInfo")
+            {
+                try
+                {
+                    // 從ajax取得PID
+                    var ajaxPID = "EFC84782-68A1-4FAD-BCFE-46AC68087488";
+
+                    // 取得貼文資料
+                    SurevyInfoModel postInfo = PostManager.GetOnePostInfo(ConverStringToGuid(ajaxPID));
+
+                    // 寫入Response
+                    SendDataByJSON(context, postInfo);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
 
         }
@@ -37,6 +55,16 @@ namespace _1029Homework.Handler
             string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(statusMsg);
             context.Response.ContentType = "application/json";
             context.Response.Write(jsonText);
+        }
+
+        private Guid ConverStringToGuid(string sourceGuid)
+        {
+            if (!Guid.TryParse(sourceGuid, out Guid outputGuid))
+            {
+                throw new Exception("Guid 轉型錯誤");
+            }
+
+            return outputGuid;
         }
 
         public bool IsReusable

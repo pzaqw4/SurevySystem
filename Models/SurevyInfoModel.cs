@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class SurveyInfoModel
+    public class SurevyInfoModel
     {
         public Guid PostID { get; set; }
         public string Title { get; set; }
