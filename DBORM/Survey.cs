@@ -6,31 +6,28 @@ namespace DBORM
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Surevy")]
-    public partial class Surevy
+    [Table("Survey")]
+    public partial class Survey
     {
-        [Required]
-        [StringLength(20)]
-        public string Title { get; set; }
-
-        public bool ActType { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime Starttime { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime Endtime { get; set; }
-
-        [StringLength(100)]
-        public string Body { get; set; }
-
         [Key]
         public Guid PostID { get; set; }
 
+        public int ID { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Title { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string Body { get; set; }
+
+        public DateTime Starttime { get; set; }
+
+        public DateTime Endtime { get; set; }
+
+        public int ActType { get; set; }
+
         public bool Available { get; set; }
-
-        public virtual Surevy Surevy1 { get; set; }
-
-        public virtual Surevy Surevy2 { get; set; }
     }
 }

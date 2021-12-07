@@ -25,25 +25,27 @@ namespace _1029Homework.Handler
 
             if (actionName == "GetAllPost")
             {
-                List<SurevyInfoModel> allPostInfo = PostManager.GetAllPostInfo();
+                List<SurveyInfoModel> allPostInfo = PostManager.GetAllPostInfo();
                 SendDataByJSON(context, allPostInfo);
             }
-            else if (actionName == "GetPostInfo")
+           
+            else if (actionName == "DeletePost")
             {
                 try
-                {
-                    // 從ajax取得PID
-                    var ajaxPID = "EFC84782-68A1-4FAD-BCFE-46AC68087488";
+                {                   
+                    string strPID = context.Request.Form["PID"];
+                    string resultMsg = string.Empty;
 
-                    // 取得貼文資料
-                    SurevyInfoModel postInfo = PostManager.GetOnePostInfo(ConverStringToGuid(ajaxPID));
+                    // check guid
+                    resultMsg = PostManager.DeletePost(ConverStringToGuid(strPID));
 
-                    // 寫入Response
-                    SendDataByJSON(context, postInfo);
+                    // send to ajax
+                    SendDataByJSON(context, resultMsg);
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    Logger.WriteLog(ex);
+                    SendDataByJSON(context, "警告!發生錯誤");
                 }
             }
 

@@ -85,7 +85,6 @@
     <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
-    <Content Include="Scripts\script.sql" />
     <Content Include="SystemAdmin\EditPostPage02.aspx" />
     <Content Include="SystemAdmin\EditQAPage03.aspx" />
     <Content Include="SystemAdmin\DetailPage04-1.aspx" />
@@ -218,7 +217,7 @@
       <Name>DBFuctions</Name>
     </ProjectReference>
     <ProjectReference Include="..\DBORM\DBORM.csproj">
-      <Project>{4ed94124-6dea-45a2-a332-358eaa86798d}</Project>
+      <Project>{d430bf6e-21d7-4941-a5ca-eabf6c89c37a}</Project>
       <Name>DBORM</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">

@@ -51,12 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger.cs" />
     <Compile Include="PostManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBORM\DBORM.csproj">
-      <Project>{4ed94124-6dea-45a2-a332-358eaa86798d}</Project>
+      <Project>{d430bf6e-21d7-4941-a5ca-eabf6c89c37a}</Project>
       <Name>DBORM</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">

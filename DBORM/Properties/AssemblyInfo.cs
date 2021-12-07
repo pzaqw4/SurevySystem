@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 下列 GUID 為專案公開 (Expose) 至 COM 時所要使用的 typelib ID
-[assembly: Guid("4ed94124-6dea-45a2-a332-358eaa86798d")]
+[assembly: Guid("d430bf6e-21d7-4941-a5ca-eabf6c89c37a")]
 
 // 組件的版本資訊由下列四個值所組成: 
 //

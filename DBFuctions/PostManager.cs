@@ -13,7 +13,7 @@ namespace DBFuctions
         #region Posting Hall Page Functions
         /// <summary> 從DB取得全部貼文資料後，轉換成Model回傳Handler </summary>
         /// <returns>List PostInfoModel</returns>
-        public static List<SurevyInfoModel> GetAllPostInfo()
+        public static List<SurveyInfoModel> GetAllPostInfo()
         {
             try
             {
@@ -21,24 +21,24 @@ namespace DBFuctions
                 {
                     // Get Post From DB View Table
                     var query =
-                        (from item in context.Surevies
-                         orderby item.Starttime descending
+                        (from item in context.Surveys
+                         orderby item.ID ascending
                          select item);
 
-
-                    List<Surevy> sourceList = query.ToList();
+                    List<Survey> sourceList = query.ToList();
 
                     // Check Data Exist
-                    if (sourceList != null)
+                    if (query != null)
                     {
                         // Write into Model
-                        List<SurevyInfoModel> postSource =
-                            sourceList.Select(obj => new SurevyInfoModel()
+                        List<SurveyInfoModel> postSource =
+                            sourceList.Select(obj => new SurveyInfoModel()
                             {
                                 PostID = obj.PostID,
+                                ID = obj.ID,
                                 Title = obj.Title,
-                                Starttime = obj.Starttime.ToString("yyyy - MM - dd HH: mm:ss"),
-                                Endtime = obj.Endtime.ToString("yyyy - MM - dd HH: mm:ss"),
+                                Starttime = obj.Starttime.ToString("yyyy - MM - dd"),
+                                Endtime = obj.Endtime.ToString("yyyy - MM - dd"),
                                 Body = obj.Body,
                                 ActType = obj.ActType,
                                 Available = obj.Available
@@ -47,57 +47,35 @@ namespace DBFuctions
                         return postSource;
                     }
                     else
-                        {
-                            return null;
-                        }
-                    }
+                        return null;
+                }
             }
             catch (Exception ex)
             {
+                Logger.WriteLog(ex);
                 return null;
             }
         }
         #endregion
 
-
-        public static SurevyInfoModel GetOnePostInfo(Guid pid)
+        public static string DeletePost(Guid pid)
         {
             try
             {
                 using (DBModel context = new DBModel())
                 {
-                    // get info from DB
                     var query =
-                        (from item in context.Surevies
-                         where item.PostID == pid
-                         select item);
-
-                    List<Surevy> sourceList = query.ToList();
-
-                    // Check Data exist
-                    if (sourceList != null)
-                    {
-                        // write into model
-                        List<SurevyInfoModel> postInfo =
-                            sourceList.Select(obj => new SurevyInfoModel()
-                            {
-                                Starttime = obj.Starttime.ToString("yyyy-MM-dd HH:mm:ss"),
-                                Title = obj.Title,
-                                Body = obj.Body
-                            }).ToList();
-
-                        return postInfo[0];
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                        $@"
+                            DELETE FROM [dbo].[Survey]
+                            WHERE [PostID] = '{pid}' 
+                        ";
+                    context.Database.ExecuteSqlCommand(query);
+                    return "Success";
                 }
             }
             catch (Exception ex)
             {
-               
-                return null;
+                return ex.ToString();
             }
         }
     }

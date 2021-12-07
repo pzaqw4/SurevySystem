@@ -15,7 +15,7 @@ namespace DBORM
         public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<MixQu> MixQus { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
-        public virtual DbSet<Surevy> Surevies { get; set; }
+        public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<UserInfo> UserInfoes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -23,10 +23,6 @@ namespace DBORM
             modelBuilder.Entity<Answer>()
                 .Property(e => e.A_UserPhone)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<Surevy>()
-                .HasOptional(e => e.Surevy1)
-                .WithRequired(e => e.Surevy2);
 
             modelBuilder.Entity<UserInfo>()
                 .Property(e => e.Phone)
