@@ -32,7 +32,7 @@ namespace _1029Homework.Handler
             else if (actionName == "DeletePost")
             {
                 try
-                {                   
+                {
                     string strPID = context.Request.Form["PID"];
                     string resultMsg = string.Empty;
 

@@ -58,24 +58,36 @@ namespace DBFuctions
         }
         #endregion
 
+        /// <summary>
+        /// 刪除貼文
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
         public static string DeletePost(Guid pid)
         {
             try
             {
                 using (DBModel context = new DBModel())
                 {
-                    var query =
-                        $@"
-                            DELETE FROM [dbo].[Survey]
-                            WHERE [PostID] = '{pid}' 
-                        ";
-                    context.Database.ExecuteSqlCommand(query);
-                    return "Success";
+
+                    var dbObject =
+                        context.Surveys.Where(obj => obj.PostID == pid).FirstOrDefault();
+
+                    if (dbObject != null)
+                    {
+                        context.Surveys.Remove(dbObject);
+                        context.SaveChanges();
+
+                        return "Success";
+                    }
+
+                    return "fail";
                 }
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                Logger.WriteLog(ex);
+                return "Fail!";
             }
         }
     }
