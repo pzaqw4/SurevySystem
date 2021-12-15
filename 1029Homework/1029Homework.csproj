@@ -80,6 +80,7 @@
     <Content Include="Global.asax" />
     <Content Include="Handler\SystemHandler.ashx" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
+    <Content Include="LoginPage05.aspx" />
     <Content Include="Scripts\highcharts.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -103,6 +104,13 @@
     </Compile>
     <Compile Include="Handler\SystemHandler.ashx.cs">
       <DependentUpon>SystemHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginPage05.aspx.cs">
+      <DependentUpon>LoginPage05.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginPage05.aspx.designer.cs">
+      <DependentUpon>LoginPage05.aspx</DependentUpon>
     </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
@@ -223,6 +231,10 @@
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{dabe13d0-d819-4654-a904-6d1fecc819e5}</Project>
       <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemAuth\SystemAuth.csproj">
+      <Project>{35ead775-02f9-47a0-91f0-07f1f1e634ce}</Project>
+      <Name>SystemAuth</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -30,41 +30,40 @@
             </div>
         </div>
     </nav>
-     <form class="needs-validation" novalidate>
+     <form class="needs-validation" novalidate runat ="server">
     <div class="row mb-3 align-items-center">
-        <label class="col-sm-2 col-form-label">請輸入問卷標題</label>
+        <label class="col-sm-2 col-form-label" id="lblTitle" runat="server">請輸入問卷標題</label>
         <div class="col-sm-10">
-            <input type="text">
+            <input id="textTitle" runat ="server" />
         </div>
     </div>
     <div class="row mb-3 align-items-center">
-        <label class="col-sm-2 col-form-label">請輸入問卷描述內容</label>
+        <label class="col-sm-2 col-form-label"  id="lblBody" runat="server">請輸入問卷描述內容</label>
         <div class="col-sm-10">
-        <textarea class="auto-style2"></textarea>
+        <textarea class="auto-style2" id="textBody" runat="server"></textarea>
             </div>
     </div>
     <div class="row mb-3 align-items-center">
-        <label class="col-sm-2 col-form-label">請輸入問卷開始時間</label>
+        <label class="col-sm-2 col-form-label" runat="server" id="lblStart" >請輸入問卷開始時間</label>
         <div class="col-sm-10">
-        <input type="date">
+        <input type="date" id="startDate" runat="server">
             </div>
     </div>
     <div class="row mb-3 align-items-center">
-        <label class="col-sm-2 col-form-label">請輸入問卷結束時間</label>
+        <label class="col-sm-2 col-form-label" runat="server" id="lblEnd">請輸入問卷結束時間</label>
         <div class="col-sm-10">
-        <input type="date">
+        <input type="date" id="endDate" runat="server">
             </div>
     </div>
     <div class="col-auto mb-3">
         <div class="form-check">
-            <input class="form-check-input" type="checkbox">
+            <input class="form-check-input" type="checkbox" runat ="server" id="cbAvailable">
             <label class="form-check-label">已啟用</label>
         </div>
     </div>
-    <div>
-        <a class="btn btn-sm btn-outline-secondary guestFunc" href="EditQAPage03.aspx">新增</a>
-        <%--<button class="btn btn-outline-primary" type="submit">確認</button>--%>
-        <button class="btn btn-outline-warning" type="reset">清除</button>
+    <div >
+        <asp:Button class="btn btn-outline-primary" id="BtnConfirm" onclick="BtnConfirm_Click" runat ="server" Text="確認"/>
+        <asp:Button class="btn btn-outline-warning" Text="清除" runat ="server" ID="btnclear" OnClick="btnclear_Click"/>
     </div>
          </form>
 </asp:Content>

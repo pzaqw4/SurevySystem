@@ -10,6 +10,34 @@ namespace DBFuctions
 {
     public class PostManager
     {
+        public static void CreateSurvey(Survey survey)
+        {
+            try
+            {
+                using (DBModel context = new DBModel())
+                {
+                    context.Surveys.Add(survey);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+            }
+        }
+        public static int GetnewID()
+        {
+            var list = GetAllPostInfo();
+            int id = 1;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].ID > id)
+                {
+                    id = list[i].ID;
+                }
+            }
+            return id += 1;
+        }
         #region Posting Hall Page Functions
         /// <summary> 從DB取得全部貼文資料後，轉換成Model回傳Handler </summary>
         /// <returns>List PostInfoModel</returns>
@@ -58,8 +86,9 @@ namespace DBFuctions
         }
         #endregion
 
+        #region Delete Data From DB
         /// <summary>
-        /// 刪除貼文
+        /// 刪除問卷
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
@@ -90,5 +119,7 @@ namespace DBFuctions
                 return "Fail!";
             }
         }
+        #endregion
+
     }
 }

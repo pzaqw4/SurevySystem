@@ -11,7 +11,23 @@
     <script src="../Scripts/jquery-3.6.0.js"></script>
     <link href="../Scripts/datatables.min.css" rel="stylesheet" />
     <script src="../Scripts/datatables.min.js"></script>
-   
+   <script>
+       $(function () {
+           var authx = document.cookie.indexOf(".ASPXAUTH");
+
+           if (0 == authx && sessionStorage.getItem("Name") != null) {
+               alert(`歡迎登入後台! ${sessionStorage.getItem("Name")}!!`);
+           }
+           else {
+               document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+           }
+           $("#logoutBtn").click(function () {
+               //document.cookie = ".ASPXAUTH= ;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+               document.cookie = '.ASPXAUTH= ; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+                window.location.href = "../ListPage01.aspx";
+           });
+       });
+   </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -20,7 +36,7 @@
         <div style="height: 50px" class="text-left fs-3 bg-dark text-white">
             <a>問卷系統</a>
             <a href="../ListPage01.aspx" class="link-info">首頁</a>
-            <a href="" class="link-info">登出</a>
+            <a class="link-info closeBtn" id="logoutBtn">登出</a>
         </div>
     </div>
     <div class="container">

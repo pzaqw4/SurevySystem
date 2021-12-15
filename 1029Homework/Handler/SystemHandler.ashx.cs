@@ -5,6 +5,7 @@ using System.Web;
 using DBFuctions;
 using DBORM;
 using Models;
+using SystemAuth;
 
 namespace _1029Homework.Handler
 {
@@ -23,7 +24,55 @@ namespace _1029Homework.Handler
                 context.Response.End();
             }
 
-            if (actionName == "GetAllPost")
+            if (actionName == "Login")
+            {
+                string[] statusMsg = new string[2];
+
+                try
+                {
+                    string acc = Convert.ToString(context.Request.Form["Account"]);
+                    string pwd = Convert.ToString(context.Request.Form["Password"]);
+
+                    UserInfo userInfo = Auth.GetAccountInfo(acc);
+
+                    // check account exist
+                    if (userInfo == null)
+                    {
+                        statusMsg[0] = "帳號或密碼錯誤";
+                        SendDataByJSON(context, statusMsg);
+                        return;
+                    }
+
+                    // Check Password
+                    if (Auth.AccountPasswordAuthentication(pwd, userInfo.Password))
+                    {
+                        Auth.LoginAuthentication(userInfo);
+                        statusMsg[0] = "Success";
+                        statusMsg[1] = userInfo.Name;
+                    }
+                    else
+                    {
+                        statusMsg[0] = "帳號或密碼錯誤";
+                    }
+
+                    SendDataByJSON(context, statusMsg);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                    statusMsg[0] = "登入發生錯誤，請使用其他瀏覽器或無痕模式";
+                    SendDataByJSON(context, statusMsg);
+                    return;
+                }
+
+            }
+            //else if(actionName == "Logout")
+            //{
+            //    Auth.SignOut();
+            //}
+
+
+            else if (actionName == "GetAllPost")
             {
                 List<SurveyInfoModel> allPostInfo = PostManager.GetAllPostInfo();
                 SendDataByJSON(context, allPostInfo);

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBORM", "DBORM\DBORM.csproj", "{D430BF6E-21D7-4941-A5CA-EABF6C89C37A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemAuth", "SystemAuth\SystemAuth.csproj", "{35EAD775-02F9-47A0-91F0-07F1F1E634CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D430BF6E-21D7-4941-A5CA-EABF6C89C37A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D430BF6E-21D7-4941-A5CA-EABF6C89C37A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D430BF6E-21D7-4941-A5CA-EABF6C89C37A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35EAD775-02F9-47A0-91F0-07F1F1E634CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35EAD775-02F9-47A0-91F0-07F1F1E634CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35EAD775-02F9-47A0-91F0-07F1F1E634CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35EAD775-02F9-47A0-91F0-07F1F1E634CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
