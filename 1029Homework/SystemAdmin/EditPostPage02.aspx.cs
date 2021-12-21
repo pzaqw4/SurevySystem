@@ -20,7 +20,6 @@ namespace _1029Homework.SystemAdmin
             string title = this.textTitle.Value;
             string body = this.textBody.Value;
             bool ava;
-            //int id =
 
             if (CheckInput())
             {
@@ -42,12 +41,10 @@ namespace _1029Homework.SystemAdmin
                     Starttime = str,
                     Endtime = end,
                 };
-
                 DBFuctions.PostManager.CreateSurvey(Survey);
                 Session["PostID"] = Survey.PostID;
 
-
-                Response.Redirect("EditQAPage03.aspx");
+                Response.Redirect($"EditQAPage03.aspx?PostID={Survey.PostID}");
             }
 
         }
