@@ -74,8 +74,8 @@
         </div>
         <hr>
         <div class="mb-3">
-            <asp:ImageButton runat="server" ImageUrl="../Images/trash.png" ID="ibtnDelete" OnClick="ibtnDelete_Click" ToolTip="刪除問題請按" OnClientClick="confirm('確定刪除問題嗎?')" />
-            <asp:Button type="button" class="btn btn-dark" runat="server" ID="btnSubmit" Text="送出" OnClick="btnSubmit_Click" OnClientClick="confirm('確任送出嗎?')" />
+            <asp:ImageButton runat="server" ImageUrl="../Images/trash.png" ID="ibtnDelete" OnClick="ibtnDelete_Click" ToolTip="刪除問題請按" OnClientClick="if (confirm('確定刪除嗎？')==false) {return false;}" UseSubmitBehavior="False"  />
+            <asp:Button type="button" class="btn btn-dark" runat="server" ID="btnSubmit" Text="送出" OnClick="btnSubmit_Click" OnClientClick="if (confirm('確認送出嗎？')==false) {return false;}" UseSubmitBehavior="False" />
             <asp:Button type="button" class="btn btn-warning" runat="server" ID="btnCancel" Text="取消" OnClick="btnCancel_Click" />
         </div>
 

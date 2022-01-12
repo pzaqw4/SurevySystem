@@ -15,16 +15,14 @@
        $(function () {
            var authx = document.cookie.indexOf(".ASPXAUTH");
 
-           if (0 == authx && sessionStorage.getItem("Name") != null) {
-               alert(`歡迎登入後台! ${sessionStorage.getItem("Name")}!!`);
-           }
-           else {
-               document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+           if (authx != 0 || sessionStorage.getItem("Name") == null) {
+               window.location.href = "../ListPage01.aspx";
            }
            $("#logoutBtn").click(function () {
-               //document.cookie = ".ASPXAUTH= ;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-               document.cookie = '.ASPXAUTH= ; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-                window.location.href = "../ListPage01.aspx";
+               document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+               alert(`登出成功!! ${sessionStorage.getItem("Name")} 歡迎再次使用~`);
+               sessionStorage.removeItem("Name");                  
+               window.location.href = "../ListPage01.aspx";
            });
        });
    </script>
@@ -36,7 +34,7 @@
         <div style="height: 50px" class="text-left fs-3 bg-dark text-white">
             <a>問卷系統</a>
             <a href="../ListPage01.aspx" class="link-info">首頁</a>
-            <a class="link-info closeBtn" id="logoutBtn">登出</a>
+            <a class="link-info" id="logoutBtn">登出</a>
         </div>
     </div>
     <div class="container">

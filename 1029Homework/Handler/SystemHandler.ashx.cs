@@ -60,13 +60,12 @@ namespace _1029Homework.Handler
                 catch (Exception ex)
                 {
                     Logger.WriteLog(ex);
-                    statusMsg[0] = "登入發生錯誤，請使用其他瀏覽器或無痕模式";
                     SendDataByJSON(context, statusMsg);
                     return;
                 }
 
             }
-            //else if(actionName == "Logout")
+            //else if (actionName == "Logout")
             //{
             //    Auth.SignOut();
             //}
@@ -77,19 +76,55 @@ namespace _1029Homework.Handler
                 List<SurveyInfoModel> allPostInfo = PostManager.GetAllPostInfo();
                 SendDataByJSON(context, allPostInfo);
             }
-           
+
+            else if (actionName == "GetPostInfo")
+            {
+                try
+                {
+                    // 從ajax取得PID
+                    var ajaxPID = context.Request.Form["PID"];
+
+                    // 取得貼文資料
+                    SurveyInfoModel postInfo = PostManager.GetOnePostInfo(ConverStringToGuid(ajaxPID));
+
+                    // 寫入Response
+                    SendDataByJSON(context, postInfo);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                }
+            }
+            else if (actionName == "GetAllQus")
+            {
+                try
+                {
+                    // 從ajax取得PID
+                    var ajaxPID = context.Request.Form["PID"];
+
+                    // 取得貼文的全部留言
+                    List<QuestionInfoModel> allQus = PostManager.GetAllQuestion(ConverStringToGuid(ajaxPID));
+
+                    // 寫入Response
+                    SendDataByJSON(context, allQus);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                }
+            }
             else if (actionName == "DeletePost")
             {
                 try
                 {
                     string strPID = context.Request.Form["PID"];
-                    string resultMsg = string.Empty;
+                    string result = string.Empty;
 
                     // check guid
-                    resultMsg = PostManager.DeletePost(ConverStringToGuid(strPID));
+                    result = PostManager.DeletePost(ConverStringToGuid(strPID));
 
                     // send to ajax
-                    SendDataByJSON(context, resultMsg);
+                    SendDataByJSON(context, result);
                 }
                 catch (Exception ex)
                 {

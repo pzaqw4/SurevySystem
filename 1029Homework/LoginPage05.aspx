@@ -16,19 +16,20 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-4">
             <div class="col-2 text-center">
                 <label for="txtPwd" class="form-label">密碼 : </label>
             </div>
             <div class="col-4">
                 <input type="password" class="form-control" id="txtPwd" value="" required pattern=".{5,15}" title="">
                 <div class="invalid-feedback">
-                    請填入正確密碼!
+                    請填入密碼!
                 </div>
             </div>
         </div>
         <div class="col-12">
-            <button class="btn btn-primary" type="submit">送出</button>
+            <button class="btn btn-primary" type="submit">送出</button>&nbsp;&nbsp;
+             <button class="btn btn-light" type="reset">清除</button>
         </div>
         <hr class="my-4">
     </form>
@@ -42,8 +43,9 @@
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function () {
                     if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
+                        event.preventDefault();
+                        event.stopPropagation();
+                        alert('登入失敗,請重新確認帳號密碼!!');
                     }
                     else {
                         var acc = $("#txtAcc").val();
@@ -59,14 +61,14 @@
                             success: function (result) {                                
                                 var authx = document.cookie.indexOf(".ASPXAUTH");
                                 if ("Success" == result[0]) {
-                                    if (authx == 0) {
-                                        alert('登入成功');
+                                    if (authx == 0) {                                        
                                         sessionStorage.setItem("Name", result[1]);
+                                        alert(`登入成功 歡迎使用 ${sessionStorage.getItem("Name")}!!`);
                                         redirect();
                                     }
                                 }
                                 else {
-                                    alert('登入失敗,請確認帳號密碼!!');
+                                    alert('登入失敗,請重新確認帳號密碼!!');
                                 }
                             }
                           
