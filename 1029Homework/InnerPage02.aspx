@@ -7,9 +7,15 @@
         const pageUrl = new URL(window.location.href);
         var pid = pageUrl.searchParams.get("PID");
 
-        sessionStorage.clear();
+        function reset() {      //重置sessionstorage & cookie
+            sessionStorage.removeItem('ansVal');  
+            document.cookie = 'ansVal' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+        }
+        reset();
+
 
         $(document).ready(function () {
+            document.getElementById("btnRe").addEventListener("click", reset);
             $.ajax({
                 url: "/Handler/SystemHandler.ashx?ActionName=GetPostInfo",
                 type: "POST",
@@ -57,7 +63,7 @@
                     $(".ansRadio").click(function () {
                         let checkValue = $(this).val();
                         var checkID = $(this).attr("id");
-                        var arr = JSON.parse(sessionStorage.getItem('radVal')) || [];
+                        var arr = JSON.parse(sessionStorage.getItem('ansVal')) || [];
                         var inputObject = {
                             key: checkID, value: checkValue
                         };
@@ -76,15 +82,17 @@
                         else {
                             arr.push(inputObject);
                         }
-                        sessionStorage.setItem("radVal", JSON.stringify(arr));      //陣列轉為JSON,填入sessionStorage
+                        var val = JSON.stringify(arr);    //陣列轉為JSON,填入sessionStorage
+                        sessionStorage.setItem("ansVal", val);
+                        document.cookie = "ansVal" + "=" + escape(val);  //加入cookie編碼
                     });
                     $(".ansChb").click(function () {
                         var isChecked = $(this).is(":checked");
-                        var chbarr = JSON.parse(sessionStorage.getItem('chbVal')) || [];   //判斷是否為新資料
+                        var chbarr = JSON.parse(sessionStorage.getItem('ansVal')) || [];   //判斷是否為新資料
                         let checkValue = $(this).val();
                         var checkID = $(this).attr("id");
                         var inputObject = {
-                            key: checkID, value: checkValue + ";"
+                            key: checkID, value: checkValue + ','
                         };
                         if (isChecked == true) {                                          //判斷是否點選
                             if (chbarr != null && chbarr.length > 0) {
@@ -101,8 +109,11 @@
                             }
                             else {
                                 chbarr.push(inputObject);             //寫入陣列
-                            }                                                                  
-                            sessionStorage.setItem("chbVal", JSON.stringify(chbarr));     //陣列轉為JSON,填入sessionStorage
+                            }
+                            var val = JSON.stringify(chbarr);     //陣列轉為JSON,填入sessionStorage
+                            sessionStorage.setItem("ansVal", val);
+                            document.cookie = "ansVal" + "=" + escape(val);
+
                         }
                         else {                                       //若取消點選,則做檢查                               
                             if (chbarr != null && chbarr.length > 0) {
@@ -112,16 +123,17 @@
                                         break;
                                     }
                                 }
-                                sessionStorage.setItem("chbVal", JSON.stringify(chbarr));          //填入sessionStorage
+                                var val = JSON.stringify(chbarr);     //陣列轉為JSON,填入sessionStorage
+                                sessionStorage.setItem("ansVal", val);
+                                document.cookie = "ansVal" + "=" + escape(val);
                             }
                         }
                     });
-                    var text = document.getElementById(`${obj.QuID}`),
-                        btn = document.getElementById("ContentPlaceHolder1_btnSub");
-                    btn.onclick = function () {
-                        var checkID = text.id;
-                        var txtVal = text.value;
-                        var txtArr = JSON.parse(sessionStorage.getItem('txtVal')) || [];
+
+                    $('.txtArea').change(function () {     //文字方塊的值改變觸發事件
+                        var checkID = $(this).attr("id");;
+                        var txtVal = $(this).val();
+                        var txtArr = JSON.parse(sessionStorage.getItem('ansVal')) || [];
                         var inputObject = {
                             key: checkID, value: txtVal
                         };
@@ -140,46 +152,45 @@
                         else {
                             txtArr.push(inputObject);
                         }
-                        sessionStorage.setItem("txtVal", JSON.stringify(txtArr));
-                    }
+                        var val = JSON.stringify(txtArr);    //陣列轉為JSON,填入sessionStorage
+                        sessionStorage.setItem("ansVal", val);
+                        document.cookie = "ansVal" + "=" + escape(val);
+                        $('.txtArea').trigger('change');
+                    });
                 }
             });
         });
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form class="row g-2 needs-validation" novalidate runat="server">
+    <form class="row g-2 needs-validation" runat="server">
         <p class="fs-2 fw-bold" id="headText">[注意!] 不存在的頁面 [注意!]</p>
         <div id="bodyText" class="mb-3">
-            <a></a>
         </div>
         <small id="timeText"></small>
         <hr />
         <div class="row">
             <div class="col-4 form-floating mb-3">
                 <input type="text" class="form-control" id="txtName" placeholder="123" runat="server" required />
-                <div class="invalid-feedback">請填入姓名!</div>
                 <label for="txtName">請在此填入姓名</label>
             </div>
         </div>
         <div class="row">
             <div class="col-4 form-floating mb-3">
                 <input type="tel" class="form-control" id="txtPhone" placeholder="123" pattern=".{10}" title="" required runat="server">
-                <div class="invalid-feedback">請填入正確手機號碼!</div>
                 <label for="txtPhone">請在此填入手機</label>
             </div>
         </div>
         <div class="row">
             <div class="col-4 form-floating mb-3">
                 <input type="email" class="form-control" id="txtEmail" placeholder="111@111" required runat="server">
-                <div class="invalid-feedback">請填入正確格式Email!</div>
                 <label for="txtEmail">請在此填入 Email</label>
             </div>
         </div>
         <div class="row">
             <div class="col-4 form-floating mb-3">
                 <input type="number" class="form-control" id="txtAge" placeholder="111" required runat="server">
-                <div class="invalid-feedback">請填入年齡</div>
                 <label for="txtAge">請在此填入年齡</label>
             </div>
         </div>
@@ -190,8 +201,8 @@
         <hr class="invisible">
         <div class="col-12">
             <asp:Button class="btn  btn-outline-primary" runat="server" Text="確認" ID="btnSub" OnClick="btnSub_Click" />
-            <button class="btn btn-outline-warning" type="reset">清除</button>
-            <asp:Button runat="server" class="btn btn-outline-secondary" Text="取消" ID="btnCancel" OnClick="btnCancel_Click" />
+            <button class="btn btn-outline-warning" type="reset" id="btnRe" onclick="reset()">清除</button>
+            <asp:Button runat="server" class="btn btn-outline-secondary" Text="取消" ID="btnCancel" OnClick="btnCancel_Click" OnClientClick="if (confirm('確定放棄填寫嗎？')==false) {return false;}" UseSubmitBehavior="False" />
         </div>
     </form>
 </asp:Content>

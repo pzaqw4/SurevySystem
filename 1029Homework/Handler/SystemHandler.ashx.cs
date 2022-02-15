@@ -65,11 +65,6 @@ namespace _1029Homework.Handler
                 }
 
             }
-            //else if (actionName == "Logout")
-            //{
-            //    Auth.SignOut();
-            //}
-
 
             else if (actionName == "GetAllPost")
             {
@@ -77,6 +72,16 @@ namespace _1029Homework.Handler
                 SendDataByJSON(context, allPostInfo);
             }
 
+            else if (actionName == "GetAnswerInfo")
+            {
+                List<AnswerInfoModel> allPostInfo = PostManager.GetAllAnswerInfo();
+                SendDataByJSON(context, allPostInfo);
+            }
+            else if (actionName == "GetQusMixInfo")
+            {
+                List<QusMixModel> allPostInfo = PostManager.GetQusMixInfo();
+                SendDataByJSON(context, allPostInfo);
+            }
             else if (actionName == "GetPostInfo")
             {
                 try
@@ -86,6 +91,41 @@ namespace _1029Homework.Handler
 
                     // 取得貼文資料
                     SurveyInfoModel postInfo = PostManager.GetOnePostInfo(ConverStringToGuid(ajaxPID));
+
+                    // 寫入Response
+                    SendDataByJSON(context, postInfo);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                }
+            }
+            else if (actionName == "GetanAnsInfo")
+            {
+                try
+                {
+                    // 從ajax取得PID
+                    var ajaxAID = context.Request.Form["AID"];
+
+                    // 取得貼文資料
+                    AnswerInfoModel postInfo = PostManager.GetOneAnswerInfo(Convert.ToInt32(ajaxAID));
+
+                    // 寫入Response
+                    SendDataByJSON(context, postInfo);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                }
+            }
+            else if (actionName == "GetOneMixInfo")
+            {
+                try
+                {
+                    string quid = context.Request.Form["QUID"];
+
+                    // 取得貼文資料
+                    QusMixModel postInfo = PostManager.GetOneMixInfo(Convert.ToInt32(quid));
 
                     // 寫入Response
                     SendDataByJSON(context, postInfo);
@@ -113,6 +153,64 @@ namespace _1029Homework.Handler
                     Logger.WriteLog(ex);
                 }
             }
+            else if (actionName == "CreateMix")
+            {
+                int quid = GetnewID();
+                string caption = context.Request.Form["Caption"];
+                string must = context.Request.Form["Nullable"];
+                string type = context.Request.Form["Type"];
+                string ans = context.Request.Form["Ans"];
+
+                if (string.IsNullOrWhiteSpace(caption) || string.IsNullOrWhiteSpace(ans))
+                {
+                    SendDataByJSON(context, "警告!題目與回答為必填");
+                    return;
+                }
+
+                try
+                {
+                    MixQu mixQu = new MixQu
+                    {
+                        QuID = quid,
+                        Caption = caption,
+                        Type = Convert.ToInt32(type),
+                        Nullable = Convert.ToBoolean(must),
+                        Ans = ans
+                    };
+                    DBFuctions.PostManager.CreateMixQus(mixQu);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                    SendDataByJSON(context, "警告!發生錯誤");
+                }
+            }
+            else if (actionName == "UpDateMix")
+            {
+                string quid = context.Request.Form["QUID"];
+                string caption = context.Request.Form["Caption"];
+                string must = context.Request.Form["Nullable"];
+                string type = context.Request.Form["Type"];
+                string ans = context.Request.Form["Ans"];
+
+                try
+                {
+                    MixQu mixQu = new MixQu
+                    {
+                        QuID = Convert.ToInt32(quid),
+                        Caption = caption,
+                        Type = Convert.ToInt32(type),
+                        Nullable = Convert.ToBoolean(must),
+                        Ans = ans
+                    };
+                    DBFuctions.PostManager.UpDateMixQus(mixQu);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                    SendDataByJSON(context, "警告!發生錯誤");
+                }
+            }
             else if (actionName == "DeletePost")
             {
                 try
@@ -122,6 +220,25 @@ namespace _1029Homework.Handler
 
                     // check guid
                     result = PostManager.DeletePost(ConverStringToGuid(strPID));
+
+                    // send to ajax
+                    SendDataByJSON(context, result);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLog(ex);
+                    SendDataByJSON(context, "警告!發生錯誤");
+                }
+            }
+            else if (actionName == "DeleteMixQus")
+            {
+                try
+                {
+                    string quid = context.Request.Form["QUID"];
+                    string result = string.Empty;
+
+                    // check guid
+                    result = PostManager.DeleteMixQus(Convert.ToInt32(quid));
 
                     // send to ajax
                     SendDataByJSON(context, result);
@@ -151,6 +268,19 @@ namespace _1029Homework.Handler
             }
 
             return outputGuid;
+        }
+        public static int GetnewID()
+        {
+            var list = DBFuctions.PostManager.GetQusMixInfo();
+            int id = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].QuID > id)
+                {
+                    id = list[i].QuID;
+                }
+            }
+            return id += 1;
         }
 
         public bool IsReusable

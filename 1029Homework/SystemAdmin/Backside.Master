@@ -7,25 +7,25 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--<title></title>-->
     <link rel="stylesheet" href="../Bootstrap/css/bootstrap.css" />
-    <script src="../Bootstrap/js/bootstrap.js"></script> 
+    <script src="../Bootstrap/js/bootstrap.js"></script>
     <script src="../Scripts/jquery-3.6.0.js"></script>
     <link href="../Scripts/datatables.min.css" rel="stylesheet" />
     <script src="../Scripts/datatables.min.js"></script>
-   <script>
-       $(function () {
-           var authx = document.cookie.indexOf(".ASPXAUTH");
+    <script>
+        $(function () {
+            var authx = document.cookie.indexOf(".ASPXAUTH");
 
-           if (authx != 0 || sessionStorage.getItem("Name") == null) {
-               window.location.href = "../ListPage01.aspx";
-           }
-           $("#logoutBtn").click(function () {
-               document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-               alert(`登出成功!! ${sessionStorage.getItem("Name")} 歡迎再次使用~`);
-               sessionStorage.removeItem("Name");                  
-               window.location.href = "../ListPage01.aspx";
-           });
-       });
-   </script>
+            if (authx != 0 || sessionStorage.getItem("Name") == null) {
+                window.location.href = "../ListPage01.aspx";
+            }
+            $("#logoutBtn").click(function () {
+                document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+                alert(`登出成功!! ${sessionStorage.getItem("Name")} 歡迎再次使用~`);
+                sessionStorage.removeItem("Name");
+                window.location.href = "../ListPage01.aspx";
+            });
+        });
+    </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -41,16 +41,24 @@
         <p class="fs-2 fw-bold">後台-問卷管理</p>
         <div class="row justify-content-start">
             <div class="col-2">
-                <div class="list-group">
-                    <a href="BacksideListPage01.aspx" class="list-group-item list-group-item-action list-group-item-info">問卷管理</a>
-                    <a href="" class="list-group-item list-group-item-action list-group-item-info">常見問題管理</a>
+                <div class="list-group accordion">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        問卷管理
+                    </button>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                        <a href="BacksideListPage01.aspx" class="list-group-item list-group-item-action accordion-body ">問卷清單</a>
+                        <a href="DetailPage04-1.aspx" class="list-group-item list-group-item-action accordion-body ">問卷回答清單</a>
+                    </div>
+                <a href="QusMixPage06.aspx" class="list-group-item list-group-item-action list-group-item-info">常見問題管理</a>
                 </div>
             </div>
+
             <div class="col-10">
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
         </div>
+
     </div>
     <footer style="height: 30px; text-align: center">
         <p>© 2021 Survey System, Inc. All rights reserved.</p>

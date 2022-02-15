@@ -58,7 +58,7 @@
         <div>
             <p class="fs-2 fw-bold">首頁</p>
             <div>
-                <a>歡迎使用問卷查詢功能</a>
+                <a>歡迎使用問卷製作功能</a>
             </div>
             <div class="mb-3">
                 <a>進入後台請登入管理員帳號</a>

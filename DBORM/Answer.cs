@@ -30,7 +30,7 @@ namespace DBORM
 
         [Column("Answer")]
         [Required]
-        [StringLength(100)]
+        [StringLength(int.MaxValue)]
         public string Answer1 { get; set; }
 
         public Guid PostID { get; set; }

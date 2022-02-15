@@ -24,12 +24,23 @@ namespace _1029Homework.SystemAdmin
                 currentPostID = Request.QueryString["PostID"];
                 if (currentPostID == null)
                     Response.Redirect("EditPostPage02.aspx");
+
+
+
+                var qus = DBFuctions.PostManager.GetQusMixInfo();
+
+                for (int i = 0; i < qus.Count; i++)
+                {
+                    string title = qus[i].Caption.ToString();
+                    string quid = qus[i].QuID.ToString();
+                    this.ddlMix.Items.Add(new ListItem(title, quid));
+                }
                 AddDefaultFirstRecord();
 
                 DataTable dt = new DataTable();
                 DataRow dr;
                 dt.TableName = "Answer2";
-                dt.Columns.Add(new DataColumn("Q", typeof(string)));
+                dt.Columns.Add(new DataColumn("Qus", typeof(string)));
                 dt.Columns.Add(new DataColumn("ans", typeof(string)));
                 dt.Columns.Add(new DataColumn("type", typeof(string)));
                 dt.Columns.Add(new DataColumn("must", typeof(string)));
@@ -50,7 +61,7 @@ namespace _1029Homework.SystemAdmin
             DataTable dt = new DataTable();
             DataRow dr;
             dt.TableName = "Answer";
-            dt.Columns.Add(new DataColumn("Q", typeof(string)));
+            dt.Columns.Add(new DataColumn("Qus", typeof(string)));
             dt.Columns.Add(new DataColumn("ans", typeof(string)));
             dt.Columns.Add(new DataColumn("type", typeof(string)));
             dt.Columns.Add(new DataColumn("must", typeof(string)));
@@ -88,7 +99,7 @@ namespace _1029Homework.SystemAdmin
                     {
                         //將每一行加到表單中  
                         drCurrentRow = dtCurrentTable.NewRow();
-                        drCurrentRow["Q"] = txtQe.Value;
+                        drCurrentRow["Qus"] = txtQe.Value;
                         drCurrentRow["ans"] = taAns.Value;
                         if (selType.Value == "0")
                         {
@@ -139,7 +150,6 @@ namespace _1029Homework.SystemAdmin
                 GridViewRow gvrow = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
                 int index = gvrow.RowIndex;
 
-                //string Qdid = gvSurvey.Rows[index].Cells[1].Text.Trim();
                 string qt = gvSurvey.Rows[index].Cells[2].Text.Trim();
                 string ans = gvSurvey.Rows[index].Cells[3].Text.Trim();
                 string type = gvSurvey.Rows[index].Cells[4].Text.Trim();
@@ -344,7 +354,7 @@ namespace _1029Homework.SystemAdmin
                         bo = true;
                     else
                         bo = false;
-                        
+
 
 
                     Question question = new Question
@@ -361,6 +371,39 @@ namespace _1029Homework.SystemAdmin
             }
 
             Response.Redirect("DetailPage04-1.aspx");
+        }
+
+        protected void ddlMix_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlMix.SelectedIndex != 0)
+            {
+                int quid =Convert.ToInt32(ddlMix.SelectedValue);
+                var qus = DBFuctions.PostManager.GetOneMixInfo(quid);
+                this.txtQe.Value = qus.Caption;
+                this.taAns.Value = qus.Ans;
+
+                if (qus.Type == 0)
+                {
+                    selType.Value =(0).ToString();
+                }
+                else if (qus.Type == 1)
+                {
+                    selType.Value = (1).ToString();
+                }
+                else
+                {
+                    selType.Value = (2).ToString();
+                }
+
+                if (qus.Nullable == true)
+                {
+                    cbMust.Checked = true;
+                }
+                else
+                {
+                    cbMust.Checked = false;
+                }
+            }
         }
     }
 }

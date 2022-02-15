@@ -20,14 +20,14 @@
                 }
             });
 
+
             $.ajax({
                 url: "/Handler/SystemHandler.ashx?ActionName=GetAllQus",
                 type: "POST",
                 data: { "PID": pid },
                 success: function (result) {
-                    var radVal = JSON.parse(sessionStorage.getItem("radVal"));//轉型sessionStorage
-                    var chbVal = JSON.parse(sessionStorage.getItem("chbVal"));
-                    var txtVal = JSON.parse(sessionStorage.getItem("txtVal"));
+                        //轉型sessionStorage
+                    var ansVal = JSON.parse(sessionStorage.getItem("ansVal"));
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
                         if (obj.Nullable == true)
@@ -36,22 +36,12 @@
                             htmltext += `<p>`;
                         var htmltext = `<h4>第${i + 1}題：${obj.Caption}</h4>`;//第幾題跟題目名
 
-                        for (var j = 0; j < radVal.length; j++) {
-                            if (obj.QuID == radVal[j].key) {
-                                htmltext += `<p>回答： ${radVal[j].value}<p>`;
-                                break;
-                            }
-                        }
-                        for (var k = 0; k < chbVal.length; k++) {
-                            if (obj.QuID == chbVal[k].key) {
-                                htmltext += `<p>回答： ${chbVal[k].value}<p>`;
-                                break;
-                            }
-                        }
-                        for (var l = 0; l < txtVal.length; l++) {
-                            if (obj.QuID == txtVal[l].key) {
-                                htmltext += `<p>回答： ${txtVal[l].value}<p>`;
-                                break;
+                        if (ansVal != null) {
+                            for (var k = 0; k < ansVal.length; k++) {
+                                if (obj.QuID == ansVal[k].key) {
+                                    htmltext += `<p>回答： ${ansVal[k].value}<p>`;
+                                    break;
+                                }
                             }
                         }
 
@@ -96,10 +86,7 @@
                     <label>年齡:</label>
                 </div>
             </div>
-            <div class="col-9 form-floating mb-3">
-                <asp:Literal ID="litAnswer" runat="server"></asp:Literal>
-                <asp:Literal ID="Literal1" runat="server"></asp:Literal>
-            </div>
+            <hr class="my-4 invisible">
             <div id="ansText">
                 <%--顯示問題內容--%>
             </div>

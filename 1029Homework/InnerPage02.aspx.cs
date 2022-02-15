@@ -30,7 +30,7 @@ namespace _1029Homework
             if (HttpContext.Current.Session["Age"] != null)
                 this.txtAge.Value = HttpContext.Current.Session["Age"] as string;
 
-            Session.RemoveAll();  //用改按鈕用
+            Session.RemoveAll();  //修改按鈕用
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {

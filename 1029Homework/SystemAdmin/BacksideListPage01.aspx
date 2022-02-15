@@ -79,6 +79,9 @@
                         }
                     });
                 }
+                else {
+                    alert('刪除失敗!!');
+                }
             };
             $('#DeleteBtn').click(function () {
                 deletePost();
@@ -106,7 +109,8 @@
     </p>
      <p class="fs-4">
        刪除貼文&nbsp;
-               <button type="button" class="btn btn-sm" id="DeleteBtn"><img src="../Images/trash.png" /></button>
+               <button type="button" class="btn btn-sm" id="DeleteBtn"><img src="../Images/trash.png"/></button>
+                <small style="font-size:small">["請先點選想要刪除的問卷"]</small>
     </p>
 
     <table id="PostTable" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">

@@ -44,8 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionInfoModel.cs" />
+    <Compile Include="QusMixModel.cs" />
     <Compile Include="SurevyInfoModel.cs" />
   </ItemGroup>
   <ItemGroup>

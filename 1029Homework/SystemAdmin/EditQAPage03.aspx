@@ -29,10 +29,13 @@
             <div class="row mb-3 col-md-4">
                 <label class="col-sm-2 col-form-label">總類</label>
                 <div class="col-sm-6">
-                    <select class="form-select" runat="server">
+                    <asp:DropDownList ID="ddlMix" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlMix_SelectedIndexChanged">
+                        <asp:ListItem Value="0" Text="自訂問題"></asp:ListItem>
+                    </asp:DropDownList>
+           <%--         <select class="form-select" runat="server">
                         <option>自訂問題</option>
                         <option>常見問題1</option>
-                    </select>
+                    </select>--%>
                 </div>
             </div>
         </div>
@@ -41,24 +44,21 @@
                 <label>問題</label>
             </div>
             <div class="col-auto mb-3">
-                <input type="text" runat="server" id="txtQe" required/>
+                <input type="text" runat="server" id="txtQe" required />
             </div>
-            <div class="invalid-feedback">
-                請輸入問題
+            <div class="col-auto mb-3">
+                <select class="form-select" runat="server" id="selType">
+                    <option value="0">單選方塊</option>
+                    <option value="1">複選方塊</option>
+                    <option value="2">文字方塊</option>
+                </select>
             </div>
-        <div class="col-auto mb-3">
-            <select class="form-select" runat="server" id="selType">
-                <option value="0">單選方塊</option>
-                <option value="1">複選方塊</option>
-                <option value="2">文字方塊</option>
-            </select>
-        </div>
-        <div class="col-auto">
-            <div class="form-check">
-                <input class="form-check-input" id="cbMust" type="checkbox" runat="server">
-                <label class="form-check-label">必填</label>
+            <div class="col-auto">
+                <div class="form-check">
+                    <input class="form-check-input" id="cbMust" type="checkbox" runat="server">
+                    <label class="form-check-label">必填</label>
+                </div>
             </div>
-        </div>
         </div>
         <div class="row align-items-center">
             <div class="col-auto mb-3">
@@ -73,10 +73,10 @@
             </div>
         </div>
         <hr>
-        <div class="mb-3">
-            <asp:ImageButton runat="server" ImageUrl="../Images/trash.png" ID="ibtnDelete" OnClick="ibtnDelete_Click" ToolTip="刪除問題請按" OnClientClick="if (confirm('確定刪除嗎？')==false) {return false;}" UseSubmitBehavior="False"  />
-            <asp:Button type="button" class="btn btn-dark" runat="server" ID="btnSubmit" Text="送出" OnClick="btnSubmit_Click" OnClientClick="if (confirm('確認送出嗎？')==false) {return false;}" UseSubmitBehavior="False" />
-            <asp:Button type="button" class="btn btn-warning" runat="server" ID="btnCancel" Text="取消" OnClick="btnCancel_Click" />
+        <div class="mb-3 is-invalid">
+            <asp:ImageButton runat="server" ImageUrl="../Images/trash.png" ID="ibtnDelete" OnClick="ibtnDelete_Click" ToolTip="刪除問題請按" OnClientClick="if (confirm('確定刪除嗎？')==false) {return false;}" UseSubmitBehavior="False" />
+            <asp:Button type="button" class="btn btn-dark " runat="server" ID="btnSubmit" Text="送出" OnClick="btnSubmit_Click" OnClientClick="if (confirm('確認送出嗎？')==false) {return false;}" UseSubmitBehavior="False" />
+            <asp:Button type="button" class="btn btn-warning" runat="server" ID="btnCancel" Text="取消" OnClientClick="if (confirm('確定取消編輯嗎？')==false) {return false;}" UseSubmitBehavior="False" OnClick="btnCancel_Click" />
         </div>
 
         <asp:GridView runat="server" ID="gvSurvey" AutoGenerateColumns="False" Width="748px" OnRowCommand="gvSurvey_RowCommand" OnRowDataBound="gvSurvey_RowDataBound" OnRowCreated="gvSurvey_RowCreated" CellPadding="4" CellSpacing="2">
@@ -87,7 +87,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="no" HeaderText="編號" />
-                <asp:BoundField DataField="Q" HeaderText="問題" />
+                <asp:BoundField DataField="Qus" HeaderText="問題" />
                 <asp:BoundField DataField="ans" HeaderText="回答" />
                 <asp:BoundField DataField="type" HeaderText="類型" />
                 <asp:BoundField DataField="must" HeaderText="必填" />
