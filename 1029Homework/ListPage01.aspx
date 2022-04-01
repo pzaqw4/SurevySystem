@@ -34,17 +34,28 @@
                 type: "GET",
                 data: {},
                 success: function (result) {
-
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
-                        table.row.add([
-                            obj.ID,
-                            `<a href="InnerPage02.aspx?PID=${obj.PostID}" >${obj.Title}<a>`,
-                            obj.Available,
-                            obj.Starttime,
-                            obj.Endtime,
-                            `<a href="ResultPage04.aspx?PID=${obj.PostID}" >前往<a>`
-                        ]).draw(false);
+                        if (obj.Available == true) {
+                            table.row.add([
+                                obj.ID,
+                                `<a href="InnerPage02.aspx?PID=${obj.PostID}" >${obj.Title}<a>`,
+                                obj.Available,
+                                obj.Starttime,
+                                obj.Endtime,
+                                `<a href="ResultPage04.aspx?PID=${obj.PostID}" >前往<a>`
+                            ]).draw(false);
+                        }
+                        else {
+                            table.row.add([
+                                obj.ID,
+                                obj.Title,
+                                obj.Available,
+                                obj.Starttime,
+                                obj.Endtime,
+                                `<a href="ResultPage04.aspx?PID=${obj.PostID}" >前往<a>`
+                            ]).draw(false);
+                        }
 
                     }
                 }

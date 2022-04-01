@@ -26,7 +26,6 @@ namespace _1029Homework.SystemAdmin
                     Response.Redirect("EditPostPage02.aspx");
 
 
-
                 var qus = DBFuctions.PostManager.GetQusMixInfo();
 
                 for (int i = 0; i < qus.Count; i++)

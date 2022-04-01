@@ -58,7 +58,6 @@
                 </asp:ContentPlaceHolder>
             </div>
         </div>
-
     </div>
     <footer style="height: 30px; text-align: center">
         <p>© 2021 Survey System, Inc. All rights reserved.</p>

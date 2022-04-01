@@ -36,16 +36,30 @@
                 success: function (result) {
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
-                        table.row.add([
-                            obj.ID,
-                            obj.PostID,
-                            obj.Title,
-                            `<a href="../InnerPage02.aspx?PID=${obj.PostID}" >${obj.Title}<a>`,
-                            obj.Available,
-                            obj.Starttime,
-                            obj.Endtime,
-                            `<a href="../ResultPage04.aspx?PID=${obj.PostID}" >前往<a>`,
-                        ]).draw(false);
+                        if (obj.Available == true) {
+                            table.row.add([
+                                obj.ID,
+                                obj.PostID,
+                                obj.Title,
+                                `<a href="../InnerPage02.aspx?PID=${obj.PostID}" >${obj.Title}<a>`,
+                                obj.Available,
+                                obj.Starttime,
+                                obj.Endtime,
+                                `<a href="../ResultPage04.aspx?PID=${obj.PostID}" >前往<a>`,
+                            ]).draw(false);
+                        }
+                        else {
+                            table.row.add([
+                                obj.ID,
+                                obj.PostID,
+                                obj.Title,
+                                obj.Title,
+                                obj.Available,
+                                obj.Starttime,
+                                obj.Endtime,
+                                `<a href="../ResultPage04.aspx?PID=${obj.PostID}" >前往<a>`,
+                            ]).draw(false);
+                        }
                     }
                 }
             });
@@ -61,7 +75,7 @@
             var deletePost = function () {
                 var rowData = table.rows('.selected').data().toArray();
                 if (confirm(`即將刪除此'${rowData[0][2]}'問卷,不會後悔??`)) {
-                
+
                     $.ajax({
                         url: "/Handler/SystemHandler.ashx?ActionName=DeletePost",
                         type: "POST",
@@ -105,12 +119,14 @@
     </form>--%>
     <p class="fs-4">
         新增貼文&nbsp;
-        <a type="button" class="btn btn-sm" href="EditPostPage02.aspx"><img src="../Images/addplus.png" /></a>
+        <a type="button" class="btn btn-sm" href="EditPostPage02.aspx">
+            <img src="../Images/addplus.png" /></a>
     </p>
-     <p class="fs-4">
-       刪除貼文&nbsp;
-               <button type="button" class="btn btn-sm" id="DeleteBtn"><img src="../Images/trash.png"/></button>
-                <small style="font-size:small">["請先點選想要刪除的問卷"]</small>
+    <p class="fs-4">
+        刪除貼文&nbsp;
+               <button type="button" class="btn btn-sm" id="DeleteBtn">
+                   <img src="../Images/trash.png" /></button>
+        <small style="font-size: small">["請先點選想要刪除的問卷"]</small>
     </p>
 
     <table id="PostTable" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
